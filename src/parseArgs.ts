@@ -6,7 +6,7 @@ interface Args {
 }
 
 export function parseArgs(args: Array<string>): ResultType<Args> {
-  if (args.length < 5) {
+  if (args.length < 4) {
     return {
       error: { details: "No arguments" },
       result: null,

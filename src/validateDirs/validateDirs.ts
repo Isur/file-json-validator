@@ -1,20 +1,19 @@
 import { compareDirs } from "./compareDirs";
-import { FileError } from "@/common";
+import { FileError, ResultType } from "@/common";
 
 export function validateDirs(
   mainPath: string,
   restPaths: Array<string>
-): Array<FileError> {
+): ResultType<Array<FileError>> {
   const errors = [];
   for (const p of restPaths) {
     const fileError = compareDirs(mainPath, p);
-    if (!fileError.error) {
-      errors.push({
-        path: p,
-        errors: fileError.result,
-      });
-    }
+    if (fileError.error) return { error: fileError.error, result: null };
+    errors.push({
+      path: p,
+      errors: fileError.result,
+    });
   }
 
-  return errors;
+  return { result: errors, error: null };
 }
