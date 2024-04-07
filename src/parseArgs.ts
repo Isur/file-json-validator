@@ -1,4 +1,4 @@
-import { ResultType } from "./result";
+import { ResultType } from "./common";
 
 interface Args {
   mainDir: string;
@@ -8,7 +8,7 @@ interface Args {
 export function parseArgs(args: Array<string>): ResultType<Args> {
   if (args.length < 5) {
     return {
-      error: "No arguments",
+      error: { details: "No arguments" },
       result: null,
     };
   }

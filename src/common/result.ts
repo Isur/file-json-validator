@@ -1,3 +1,3 @@
 export type ResultType<TResult> =
   | { result: TResult; error: null }
-  | { error: string; result: null };
+  | { error: { details: string }; result: null };
