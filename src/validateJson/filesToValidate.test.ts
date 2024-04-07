@@ -8,15 +8,15 @@ describe("fileLoader", () => {
     ]);
 
     expect(result.result?.length).toBe(3);
-    expect(result.result[0]).toMatchObject({
+    expect(result.result![0]).toMatchObject({
       main: "./public/en/buttons.json",
       toCompare: "./public/ger/buttons.json",
     });
-    expect(result.result[1]).toMatchObject({
+    expect(result.result![1]).toMatchObject({
       main: "./public/en/common.json",
       toCompare: "./public/pl/common.json",
     });
-    expect(result.result[2]).toMatchObject({
+    expect(result.result![2]).toMatchObject({
       main: "./public/en/common.json",
       toCompare: "./public/ger/common.json",
     });

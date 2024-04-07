@@ -16,9 +16,7 @@ export function jsonToKeys(obj: Json, parent?: string): Array<string> {
       const p = parent ? `${parent}.${key}` : key;
       const nested = jsonToKeys(obj[key] as Json, p);
 
-      if (!nested.error) {
-        resultArray.push(...nested);
-      }
+      resultArray.push(...nested);
     }
   }
 

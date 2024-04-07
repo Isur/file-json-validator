@@ -19,11 +19,11 @@ describe("loadJson", () => {
 
   it("should return error on fail", () => {
     const data = loadJson("./public/es/common.json");
-    expect(data.error.details).toBe("File not found!");
+    expect(data.error!.details).toBe("File not found!");
   });
 
   it("should return error on fail", () => {
     const data = loadJson("./readme.md");
-    expect(data.error.details).toBe("Failed to parse file!");
+    expect(data.error!.details).toBe("Failed to parse file!");
   });
 });
