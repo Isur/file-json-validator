@@ -51,7 +51,7 @@ const fileColors = filesErrorsNumbers > 0 ? colors.red : colors.green;
 console.log(fileColors(`Json files: ${filesErrorsNumbers} error(s)`));
 niceDisplay(filesErrors.result);
 
-if (dirErrors.length + filesErrors.result.length > 0) {
+if (dirErrors.result.length + filesErrors.result.length > 0) {
   process.exit(1);
 }
 

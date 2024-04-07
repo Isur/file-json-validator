@@ -1,4 +1,8 @@
-export { ResultType } from "./result";
+import type { ResultType } from "./result";
+
 export { compareArrays } from "./compareArrays";
-export { FileError } from "./fileError";
+import type { FileError } from "./fileError";
+
 export { niceDisplay } from "./niceDisplay";
+
+export { type ResultType, type FileError };

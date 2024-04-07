@@ -2,7 +2,7 @@
   "include": ["src/**/*", "typed.d.ts"],
   "exclude": [],
   "compilerOptions": {
-    "incremental": true,
+    "incremental": false,
     "target": "es2016",
     "lib": ["ESNext", "dom"],
     "experimentalDecorators": true,

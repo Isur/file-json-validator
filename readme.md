@@ -1,54 +1,22 @@
-# TS-Starter
+# File Json Validator
 
-Typescript starter with:
+Validate your json files if they have the same structure.
 
-- swc
-- jest
-- eslint
-- prettier
-- Dockerfile
+App will work if your files are grouped in directories, e.g. for translations.
 
-# Config
+For example:
 
-Setup Environment variables in `.env` file.
+```
+en/file.json
+ger/file.json
+fr/file.json
+pl/file.json
+```
 
-Example config is in `.env-template` file.
+App will check if all directories will have file `file.json` and if each `file.json` has the same structure as one pointed as main.
 
-| ENV  | Definition                   |
-| ---- | ---------------------------- |
-| PORT | Port on which app is running |
-| ENV  | development or production    |
+# Usage
 
-# Scripts
+`file-json-validator ./public/en ./public/pl ./public/ger`
 
-| Script     | Definition                          |
-| ---------- | ----------------------------------- |
-| dev        | Run dev with hot reload             |
-| build      | Build app                           |
-| start      | Run builded app                     |
-| clean      | Remove build                        |
-| typecheck  | Check types with tsc                |
-| test       | Run jest tests with coverage report |
-| test:watch | Run jest tests with watch mode      |
-| lint       | Run eslint and prettier checks      |
-| lint:fix   | Run eslint and prettier fix         |
-
-# Deploy
-
-App is builded into `./dist` directory.
-
-There is also `Dockerfile` and `docker-compose.yml` files.
-
-Docker compose will spin app up, just remember about `.env` file.
-
-# Dependencies
-
-This starter is using `swc` for compiling app. To run hot reload development there is `nodemon` watching generated `.js` files, `chokidar` used with `swc` to compile, and `concurrently` to run together compiler and app.
-
-For static code checking there is `eslint` with plugins and `prettier`.
-
-Testing is done with `jest`.
-
-Environment config is loaded with `dotenv` and `dotenv-expand`.
-
-For schema validation `zod` is used.
+First argument for app will use direcotry as main and compare other to it.
