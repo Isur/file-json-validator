@@ -1,0 +1,20 @@
+# node modules
+node_modules
+
+# env
+.env
+
+# build
+dist
+build
+.tsbuildinfo
+
+# testing
+coverage
+
+# logs
+npm-debug.log*
+
+# Editor
+.vscode
+.idea
