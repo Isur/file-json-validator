@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { Config } from "./config";
-import { configString } from "./configString";
 
-function bootstrap() {
-  console.log(configString(Config));
-}
+import { parseArgs } from "./parseArgs";
 
-bootstrap();
+const args = process.argv;
+
+const appArgs = parseArgs(args);
+
+console.log(appArgs);

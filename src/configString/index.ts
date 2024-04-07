@@ -1,1 +1,0 @@
-export { configString } from "./configString";
