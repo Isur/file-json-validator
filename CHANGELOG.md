@@ -1,5 +1,11 @@
 # file-json-validator
 
+## 0.2.3
+
+### Patch Changes
+
+- Types generation, tsc, configs, cleanup in repository.
+
 ## 0.2.1
 
 ### Patch Changes
