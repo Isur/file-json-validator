@@ -1,5 +1,11 @@
 # file-json-validator
 
+## 0.2.1
+
+### Patch Changes
+
+- Fixed process exit when no errors
+
 ## 0.2.0
 
 ### Minor Changes

@@ -55,7 +55,7 @@ const fileColors = filesErrorsNumbers > 0 ? colorIfError : chalk.green;
 console.log(fileColors(`Json files: ${filesErrorsNumbers} error(s)`));
 niceDisplay(filesErrors.result, appArgs.result.onlyWarn);
 
-if (dirErrors.result.length + filesErrors.result.length > 0) {
+if (dirErrorsNumber + filesErrorsNumbers > 0) {
   process.exit(exitCodeIfFailed);
 }
 
