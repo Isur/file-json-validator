@@ -1,5 +1,11 @@
 # file-json-validator
 
+## 0.2.4
+
+### Patch Changes
+
+- API exports and readme update
+
 ## 0.2.3
 
 ### Patch Changes
