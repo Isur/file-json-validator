@@ -17,6 +17,24 @@ App will check if all directories will have file `file.json` and if each `file.j
 
 # Usage
 
-`file-json-validator ./public/en ./public/pl ./public/ger`
+Bin: `fjv`.
+
+`fjv ./public/en ./public/pl ./public/ger`
 
 First argument for app will use direcotry as main and compare other to it.
+
+In project you can use it as script in your `package.json`. Example:
+
+```json
+"scripts": {
+  "translations-check": "fjv ./public/en ./public/ger ./public/pl ./public/fr"
+}
+```
+
+And run as
+
+```bash
+npm run translations-check
+```
+
+Can be used also in the CI - if there are any errors it will exit with error.
