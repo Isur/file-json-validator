@@ -1,6 +1,6 @@
 {
   "name": "file-json-validator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Check if files in selected directories has the same structure.",
   "main": "dist/index.js",
   "export": "dist/index.js",
