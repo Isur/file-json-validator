@@ -2,15 +2,16 @@
 import chalk from "chalk";
 import { FileError } from "./fileError";
 
-export function niceDisplay(errors: Array<FileError>) {
+export function niceDisplay(errors: Array<FileError>, onlyWarn: boolean) {
+  const colorIfError = onlyWarn ? chalk.yellow : chalk.red;
   for (const error of errors) {
     if (error.errors.length == 0) {
       console.log(chalk.green(`${error.path}  ==> OK`));
       continue;
     } else {
-      console.log(chalk.red(error.path));
+      console.log(colorIfError(error.path));
       for (const err of error.errors) {
-        console.log(chalk.red(`\t ${err}`));
+        console.log(colorIfError(`\t ${err}`));
       }
     }
   }

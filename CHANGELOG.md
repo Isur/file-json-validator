@@ -1,5 +1,11 @@
 # file-json-validator
 
+## 0.2.0
+
+### Minor Changes
+
+- Added arg for only warn, use it as `--only-warn`
+
 ## 0.1.3
 
 ### Patch Changes
