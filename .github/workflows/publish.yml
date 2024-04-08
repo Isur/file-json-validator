@@ -1,10 +1,9 @@
-name: Test & Lint
+name: Test & Publish
 
 on:
   push:
     branches:
-      - "!master"
-      - "**"
+      - "master"
   pull_request:
   workflow_dispatch:
 
@@ -28,3 +27,7 @@ jobs:
         run: pnpm run lint
       - name: Test
         run: pnpm run test
+      - name: Publish
+        run: pnpm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_KEY }}
