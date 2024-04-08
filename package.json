@@ -1,6 +1,6 @@
 {
   "name": "file-json-validator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Check if files in selected directories has the same structure.",
   "main": "dist/index.js",
   "export": "dist/index.js",
@@ -19,7 +19,9 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "prettier --check ./src && eslint ./src --ext .ts --max-warnings=0",
-    "lint:fix": "prettier --write ./src && eslint ./src --ext .ts --fix"
+    "lint:fix": "prettier --write ./src && eslint ./src --ext .ts --fix",
+    "changeset": "changeset",
+    "changeset:release": "changeset version"
   },
   "keywords": [
     "typescript",
@@ -55,6 +57,7 @@
     "typescript": "^5.4.4"
   },
   "dependencies": {
+    "@changesets/cli": "^2.27.1",
     "colors": "^1.4.0"
   }
 }
