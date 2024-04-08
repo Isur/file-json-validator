@@ -6,7 +6,7 @@
   "export": "dist/index.js",
   "types": "dist/indes.d.ts",
   "bin": {
-    "fjv": "dist/index.js"
+    "fjv": "dist/cli.js"
   },
   "scripts": {
     "dev": "pnpm run build && concurrently \"pnpm run watch-compile\" \"pnpm run watch-dev\"",
@@ -19,8 +19,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "prettier --check ./src && eslint ./src --ext .ts --max-warnings=0",
-    "lint:fix": "prettier --write ./src && eslint ./src --ext .ts --fix",
-    "package": "tsup  src/index.ts --format cjs,esm --dts"
+    "lint:fix": "prettier --write ./src && eslint ./src --ext .ts --fix"
   },
   "keywords": [
     "typescript",
@@ -56,7 +55,6 @@
     "typescript": "^5.4.4"
   },
   "dependencies": {
-    "colors": "^1.4.0",
-    "tsup": "^8.0.2"
+    "colors": "^1.4.0"
   }
 }
