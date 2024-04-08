@@ -27,9 +27,12 @@ In project you can use it as script in your `package.json`. Example:
 
 ```json
 "scripts": {
-  "translations-check": "fjv ./public/en ./public/ger ./public/pl ./public/fr"
+  "translations-check": "fjv ./public/en ./public/ger ./public/pl ./public/fr",
+  "translations-check:warn": "fjv ./public/en ./public/ger ./public/pl ./public/fr --only-warn"
 }
 ```
+
+`--only-warn` flag make the script will not exit with error even if there are some errors. It will just warn about them.
 
 And run as
 

@@ -1,6 +1,6 @@
 {
   "name": "file-json-validator",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Check if files in selected directories has the same structure.",
   "main": "dist/index.js",
   "export": "dist/index.js",
@@ -8,6 +8,8 @@
   "bin": {
     "fjv": "dist/cli.js"
   },
+  "repository": "https://github.com/Isur/file-json-validator",
+  "homepage": "https://github.com/Isur/file-json-validator#readme",
   "scripts": {
     "dev": "pnpm run build && concurrently \"pnpm run watch-compile\" \"pnpm run watch-dev\"",
     "watch-compile": "swc src -w --out-dir dist",
@@ -58,7 +60,7 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.27.1",
-    "chalk": "4",
+    "chalk": "^4.1.2",
     "colors": "^1.4.0"
   }
 }
