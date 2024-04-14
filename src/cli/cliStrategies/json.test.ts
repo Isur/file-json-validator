@@ -68,9 +68,9 @@ describe("cli json", () => {
     it("Should execute with 1", () => {
       const json = new CliJson();
       const args = [
-        "./pub/en/common.json",
-        "./pub/pl/common.json",
-        "./pub/ger/common.json",
+        "./failed/en/common.json",
+        "./failed/pl/common.json",
+        "./failed/ger/common.json",
       ];
       const flags: Array<string> = [];
       const result = json.parseInput(args, flags);
@@ -83,9 +83,9 @@ describe("cli json", () => {
     it("Should execute with 0 beceause of flag", () => {
       const json = new CliJson();
       const args = [
-        "./pub/en/common.json",
-        "./pub/pl/common.json",
-        "./pub/ger/common.json",
+        "./failed/en/common.json",
+        "./failed/pl/common.json",
+        "./failed/ger/common.json",
       ];
       const flags: Array<string> = ["--only-warn"];
       const result = json.parseInput(args, flags);
@@ -98,7 +98,7 @@ describe("cli json", () => {
 
     it("should return with error - main file", () => {
       const json = new CliJson();
-      const args = ["./pub/en/common.jso", "./pub/pl/common.json"];
+      const args = ["./failed/en/common.jso", "./failed/pl/common.json"];
       const flags: Array<string> = [];
       const result = json.parseInput(args, flags);
       expect(result).toBeNull();
@@ -109,7 +109,7 @@ describe("cli json", () => {
     });
     it("should return with error - other file", () => {
       const json = new CliJson();
-      const args = ["./pub/en/common.json", "./pub/pl/common.jsn"];
+      const args = ["./failed/en/common.json", "./failed/pl/common.jsn"];
       const flags: Array<string> = [];
       const result = json.parseInput(args, flags);
       expect(result).toBeNull();

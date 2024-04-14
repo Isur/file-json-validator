@@ -77,7 +77,7 @@ describe("cli dir", () => {
 
     it("should correctly validate dirs - with errors", () => {
       const dir = new CliDir();
-      dir.parseInput(["./pub/en", "./pub/pl", "./pub/ger"], []);
+      dir.parseInput(["./failed/en", "./failed/pl", "./failed/ger"], []);
       const result = dir.execute();
       expect(result.error).toBeNull();
       expect(result.result).toBeDefined();
@@ -122,7 +122,10 @@ describe("cli dir", () => {
 
     it("should only warn", () => {
       const dir = new CliDir();
-      dir.parseInput(["./pub/en", "./pub/pl", "./pub/ger"], ["--only-warn"]);
+      dir.parseInput(
+        ["./failed/en", "./failed/pl", "./failed/ger"],
+        ["--only-warn"]
+      );
       const result = dir.execute();
       expect(result.error).toBeNull();
       expect(result.result).toBeDefined();

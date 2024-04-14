@@ -2,7 +2,7 @@ import { loadJson } from "./loadJson";
 
 describe("loadJson", () => {
   it("should correctly load json", () => {
-    const data = loadJson("./pub/en/common.json");
+    const data = loadJson("./failed/en/common.json");
     const expected = {
       name: "Name",
       calc: {
@@ -18,7 +18,7 @@ describe("loadJson", () => {
   });
 
   it("should return error on fail", () => {
-    const data = loadJson("./pub/es/common.json");
+    const data = loadJson("./failed/es/common.json");
     expect(data.error!.details).toBe("File not found!");
   });
 
