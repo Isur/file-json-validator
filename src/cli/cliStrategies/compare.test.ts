@@ -1,6 +1,14 @@
 import { CliCompare } from "./compare";
 
 describe("cli compare", () => {
+  beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation(() => {});
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   it("Should create compare strategy", () => {
     const compare = new CliCompare();
     expect(compare).toBeDefined();
@@ -43,6 +51,53 @@ describe("cli compare", () => {
       const compare = new CliCompare();
       const result = compare.parseInput(["path", "main"], ["--unknown"]);
       expect(result).toEqual("Unknown flag: --unknown");
+    });
+  });
+
+  describe("should execute correctly", () => {
+    it("Should work fine for correct input", () => {
+      const compare = new CliCompare();
+      const parseResult = compare.parseInput(["./public/locale", "en"], []);
+      expect(parseResult).toBeNull();
+      const result = compare.execute();
+      expect(result.error).toBeNull();
+      expect(result.result).toBe(1);
+    });
+
+    it("Should work fine for correct input -- only-warn", () => {
+      const compare = new CliCompare();
+      const parseResult = compare.parseInput(
+        ["./public/locale", "en"],
+        ["--only-warn"]
+      );
+      expect(parseResult).toBeNull();
+      const result = compare.execute();
+      expect(result.error).toBeNull();
+      expect(result.result).toBe(0);
+    });
+
+    it("Should work fine for correct input -- main dir not found ", () => {
+      const compare = new CliCompare();
+      const parseResult = compare.parseInput(
+        ["./public/local", "en"],
+        ["--only-warn"]
+      );
+      expect(parseResult).toBeNull();
+      const result = compare.execute();
+      expect(result.result).toBeNull();
+      expect(result.error!.details).toBeDefined();
+    });
+
+    it("Should work fine for correct input -- main json dir not found ", () => {
+      const compare = new CliCompare();
+      const parseResult = compare.parseInput(
+        ["./public/locale", "es"],
+        ["--only-warn"]
+      );
+      expect(parseResult).toBeNull();
+      const result = compare.execute();
+      expect(result.result).toBeNull();
+      expect(result.error!.details).toBeDefined();
     });
   });
 });

@@ -15,7 +15,7 @@ describe("CliCommandFactory", () => {
     it("should return error if no args", () => {
       const result = factory.create([]);
       expect(result.error).not.toBeNull();
-      expect(result.error?.details).toBe("Command not found!");
+      expect(result.error?.details).toBe("Command not provided!");
     });
 
     it("Should return an error - unknown command", () => {

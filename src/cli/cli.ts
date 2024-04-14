@@ -11,14 +11,14 @@ export function cli(args: Array<string>) {
   const command = cliCommandFactory.create(args);
 
   if (command.error) {
-    console.error(command.error);
+    console.error(command.error.details);
     process.exit(1);
   }
 
   const result = command.result.execute();
 
   if (result.error) {
-    console.error(command.error);
+    console.error(result.error.details);
     process.exit(1);
   }
 

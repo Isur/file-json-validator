@@ -12,7 +12,7 @@
   "homepage": "https://github.com/Isur/file-json-validator#readme",
   "scripts": {
     "dev": "pnpm run build && concurrently \"tsc -w\" \"tsc-alias -w\" \"nodemon ./dist/index.js\"",
-    "dev:cli": "pnpm run build && concurrently \"tsc -w\" \"tsc-alias -w\" \"nodemon ./dist/cli/cli.js dir ./failed/en ./failed/pl ./failed/ger \"",
+    "dev:cli": "pnpm run build && concurrently \"tsc -w\" \"tsc-alias -w\" \"nodemon ./dist/cli/cli.js compare ./public/locale en\"",
     "build": "rimraf dist && tsc && tsc-alias",
     "typecheck": "tsc --noEmit",
     "test": "jest --coverage",

@@ -11,6 +11,9 @@ export class CliCommandFactory {
 
   public create(args: Array<string>): ResultType<CliCommand> {
     const [cmd, ...restArgs] = args;
+    if (!cmd) {
+      return { error: { details: "Command not provided!" }, result: null };
+    }
     const flags = restArgs.filter((arg) => arg.startsWith("--"));
     const commandArgs = restArgs.filter((arg) => !arg.startsWith("--"));
 
