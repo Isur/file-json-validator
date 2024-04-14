@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
-import { FileError } from "./fileError";
+import { FileError } from "@/lib/types/fileError";
 
-export function niceDisplay(errors: Array<FileError>, onlyWarn: boolean) {
+export function displayErrors(errors: Array<FileError>, onlyWarn: boolean) {
   const colorIfError = onlyWarn ? chalk.yellow : chalk.red;
+
   for (const error of errors) {
     if (error.errors.length == 0) {
       console.log(chalk.green(`${error.path}  ==> OK`));
