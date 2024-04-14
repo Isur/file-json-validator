@@ -18,9 +18,9 @@ pnpm add file-json validator
 
 # Usage
 
-## Script
+## CLI
 
-There is bin file `fjv` that can be used:
+There is cli `fjv` that can be used:
 
 `fjv ./public/en ./public/pl ./public/ger`
 

@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "register": "Register",
+    "login": "Login"
+  },
+  "dashboard": {
+    "header": "header",
+    "title": "title"
+  }
+}
