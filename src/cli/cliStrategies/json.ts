@@ -1,6 +1,7 @@
 import { CliCommand } from "../cliCommand";
-import { FileError, ResultType, niceDisplay } from "@/common";
-import { loadJson, validateJson } from "@/validateJson";
+import { compareJsonsFiles } from "@/features/compareJsonsFiles";
+import { ResultType } from "@/lib/types";
+import { displayErrors } from "@/lib/displayErrors";
 
 export class CliJson implements CliCommand {
   public name = "json";
@@ -33,33 +34,16 @@ export class CliJson implements CliCommand {
   }
 
   public execute(): ResultType<number> {
-    const main = loadJson(this.main);
-    if (main.error) {
-      return {
-        error: main.error,
-        result: null,
-      };
-    }
+    const results = compareJsonsFiles(this.main, this.rest);
 
-    const results: Array<FileError> = [];
+    if (results.error) return { error: results.error, result: null };
 
-    for (const file of this.rest) {
-      const toCompare = loadJson(file);
-      if (toCompare.error) {
-        return {
-          error: toCompare.error,
-          result: null,
-        };
-      }
+    displayErrors(results.result, this.flags.onlyWarn);
 
-      const result = validateJson(main.result, toCompare.result);
-
-      results.push({ path: file, errors: result.result! });
-    }
-
-    niceDisplay(results, this.flags.onlyWarn);
-
-    const errorSum = results.reduce((acc, curr) => acc + curr.errors.length, 0);
+    const errorSum = results.result.reduce(
+      (acc, curr) => acc + curr.errors.length,
+      0
+    );
     const exitCode = errorSum > 0 ? 1 : 0;
     const exit = this.flags.onlyWarn ? 0 : exitCode;
 

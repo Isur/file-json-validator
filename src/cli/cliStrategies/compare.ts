@@ -1,8 +1,9 @@
 import { CliCommand } from "../cliCommand";
 import { CliDirResult } from "./dir";
-import { openDir, validateDirs } from "@/validateDirs";
-import { validateFiles } from "@/validateJson";
-import { niceDisplay } from "@/common";
+import { compareDirectoriesContent } from "@/features/compareDirectoriesContent";
+import { compareJsonsInDirs } from "@/features/compareJsonsInDirs";
+import { listFilesInDir } from "@/lib/files";
+import { displayErrors } from "@/lib/displayErrors";
 
 export class CliCompare implements CliCommand {
   public name = "compare";
@@ -40,7 +41,7 @@ export class CliCompare implements CliCommand {
   }
 
   private validateDirs(main: string, rest: Array<string>): CliDirResult {
-    const dirErrors = validateDirs(main, rest);
+    const dirErrors = compareDirectoriesContent(main, rest);
 
     if (dirErrors.error) {
       return { result: null, error: dirErrors.error };
@@ -57,7 +58,7 @@ export class CliCompare implements CliCommand {
   }
 
   private validateFiles(main: string, rest: Array<string>): CliDirResult {
-    const filesErrors = validateFiles(main, rest);
+    const filesErrors = compareJsonsInDirs(main, rest);
 
     if (filesErrors.error) {
       return {
@@ -80,7 +81,7 @@ export class CliCompare implements CliCommand {
   }
 
   public execute() {
-    const dirs = openDir(this.path);
+    const dirs = listFilesInDir(this.path);
 
     if (dirs.error) {
       return { error: dirs.error, result: null };
@@ -112,7 +113,7 @@ export class CliCompare implements CliCommand {
         };
       }
       errorSum += dirResult.result.numberOfErrors;
-      niceDisplay(dirResult.result.files, this.flags.onlyWarn);
+      displayErrors(dirResult.result.files, this.flags.onlyWarn);
     }
 
     if (!this.flags.onlyStructure) {
@@ -126,7 +127,7 @@ export class CliCompare implements CliCommand {
       }
 
       errorSum += filesResult.result.numberOfErrors;
-      niceDisplay(filesResult.result.files, this.flags.onlyWarn);
+      displayErrors(filesResult.result.files, this.flags.onlyWarn);
     }
 
     const exitCode = errorSum > 0 ? 1 : 0;

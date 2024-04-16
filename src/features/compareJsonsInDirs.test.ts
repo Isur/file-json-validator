@@ -1,8 +1,8 @@
-import { validateFiles } from "./validateFiles";
+import { compareJsonsInDirs } from "./compareJsonsInDirs";
 
 describe("validateFiles", () => {
   it("Should returns correct errors - no errors", () => {
-    const result = validateFiles("./failed/en", ["./failed/pl"]);
+    const result = compareJsonsInDirs("./failed/en", ["./failed/pl"]);
     expect(result.result?.length).toBe(1);
     expect(result.result![0]).toMatchObject({
       path: "./failed/pl/common.json",
@@ -10,7 +10,7 @@ describe("validateFiles", () => {
     });
   });
   it("Should returns correct errors - errors", () => {
-    const result = validateFiles("./failed/en", ["./failed/ger"]);
+    const result = compareJsonsInDirs("./failed/en", ["./failed/ger"]);
     expect(result.result?.length).toBe(2);
     expect(result.result![0]).toMatchObject({
       path: "./failed/ger/buttons.json",
@@ -23,7 +23,7 @@ describe("validateFiles", () => {
   });
 
   it("Should returns errors", () => {
-    const result = validateFiles("./failed/en", ["./failed/xd"]);
+    const result = compareJsonsInDirs("./failed/en", ["./failed/xd"]);
     expect(result.error).not.toBeNull();
   });
 });

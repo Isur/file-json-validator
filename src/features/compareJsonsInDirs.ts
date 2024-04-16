@@ -1,9 +1,8 @@
-import { filesToValidate } from "./filesToValidate";
-import { loadJson } from "./loadJson";
-import { validateJson } from "./validateJson";
-import { FileError, ResultType } from "@/common";
+import { filesToValidate, loadJson } from "@/lib/files";
+import { validateJson } from "@/lib/jsons";
+import { FileError, ResultType } from "@/lib/types";
 
-export function validateFiles(
+export function compareJsonsInDirs(
   mainDir: string,
   restDirs: Array<string>
 ): ResultType<Array<FileError>> {

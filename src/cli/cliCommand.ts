@@ -1,4 +1,4 @@
-import { ResultType } from "@/common";
+import { ResultType } from "@/lib/types";
 
 export interface CliCommand {
   name: string;

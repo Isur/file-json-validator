@@ -1,6 +1,6 @@
-import { Json } from "./json";
 import { jsonToKeys } from "./jsonToKeys";
-import { ResultType, compareArrays } from "@/common";
+import { Json, ResultType } from "@/lib/types";
+import { compareArrays } from "@/lib/compareArrays";
 
 export function validateJson(
   object: Json,

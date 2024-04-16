@@ -1,7 +1,8 @@
 import { CliCommand } from "../cliCommand";
-import { FileError, ResultType, niceDisplay } from "@/common";
-import { validateDirs } from "@/validateDirs";
-import { validateFiles } from "@/validateJson";
+import { ResultType, FileError } from "@/lib/types";
+import { compareJsonsInDirs } from "@/features/compareJsonsInDirs";
+import { compareDirectoriesContent } from "@/features/compareDirectoriesContent";
+import { displayErrors } from "@/lib/displayErrors";
 
 export type CliDirResult = ResultType<{
   numberOfErrors: number;
@@ -45,7 +46,7 @@ export class CliDir implements CliCommand {
   }
 
   private validateDirs(): CliDirResult {
-    const dirErrors = validateDirs(this.main, this.rest);
+    const dirErrors = compareDirectoriesContent(this.main, this.rest);
 
     if (dirErrors.error) {
       return { result: null, error: dirErrors.error };
@@ -62,7 +63,7 @@ export class CliDir implements CliCommand {
   }
 
   private validateFiles(): CliDirResult {
-    const filesErrors = validateFiles(this.main, this.rest);
+    const filesErrors = compareJsonsInDirs(this.main, this.rest);
 
     if (filesErrors.error) {
       return {
@@ -97,7 +98,7 @@ export class CliDir implements CliCommand {
         };
       }
       errorSum += dirResult.result.numberOfErrors;
-      niceDisplay(dirResult.result.files, this.flags.onlyWarn);
+      displayErrors(dirResult.result.files, this.flags.onlyWarn);
     }
 
     if (!this.flags.onlyStructure) {
@@ -111,7 +112,7 @@ export class CliDir implements CliCommand {
       }
 
       errorSum += filesResult.result.numberOfErrors;
-      niceDisplay(filesResult.result.files, this.flags.onlyWarn);
+      displayErrors(filesResult.result.files, this.flags.onlyWarn);
     }
 
     const exitCode = errorSum > 0 ? 1 : 0;

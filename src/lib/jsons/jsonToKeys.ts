@@ -1,4 +1,4 @@
-import { Json } from "./json";
+import { Json } from "@/lib/types/json";
 
 export function jsonToKeys(obj: Json, parent?: string): Array<string> {
   const resultArray = [];

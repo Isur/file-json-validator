@@ -1,6 +1,6 @@
 import { CliCommand } from "./cliCommand";
 import { CliCompare, CliDir, CliJson } from "./cliStrategies";
-import { ResultType } from "@/common";
+import { ResultType } from "@/lib/types";
 
 export class CliCommandFactory {
   private commandMap: Record<string, new () => CliCommand> = {

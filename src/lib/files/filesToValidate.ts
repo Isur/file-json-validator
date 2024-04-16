@@ -1,23 +1,18 @@
-import { ResultType } from "@/common";
-import { openDir } from "@/validateDirs";
-
-type FileToValidate = {
-  main: string;
-  toCompare: string;
-};
+import { listFilesInDir } from "./listFilesInDir";
+import { ResultType, FileToValidate } from "@/lib/types";
 
 export function filesToValidate(
   mainDir: string,
   restDirs: Array<string>
 ): ResultType<Array<FileToValidate>> {
-  const mainList = openDir(mainDir);
+  const mainList = listFilesInDir(mainDir);
+  if (mainList.error) return { error: mainList.error, result: null };
+
   const result: Array<FileToValidate> = [];
   const restLists: Record<string, Array<string>> = {};
 
-  if (mainList.error) return { error: mainList.error, result: null };
-
   for (const dir of restDirs) {
-    const list = openDir(dir);
+    const list = listFilesInDir(dir);
     if (list.error) return { error: list.error, result: null };
     restLists[dir] = list.result;
   }
