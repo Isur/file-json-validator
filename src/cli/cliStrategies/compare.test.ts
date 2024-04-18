@@ -38,12 +38,13 @@ describe("cli compare", () => {
       const compare = new CliCompare();
       compare.parseInput(
         ["path", "main"],
-        ["--only-warn", "--only-structure", "--only-json"]
+        ["--only-warn", "--only-structure", "--only-json", "--show-only-errors"]
       );
       expect(compare["flags"]).toEqual({
         onlyWarn: true,
         onlyStructure: true,
         onlyJson: true,
+        showOnlyErrors: true,
       });
     });
 

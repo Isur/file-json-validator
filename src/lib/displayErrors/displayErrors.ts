@@ -5,7 +5,8 @@ import { FileError } from "@/lib/types/fileError";
 export function displayErrors(
   errors: Array<FileError>,
   onlyWarn: boolean,
-  title?: string
+  title?: string,
+  showOnlyErrors?: boolean
 ) {
   const colorIfError = onlyWarn ? chalk.yellow : chalk.red;
 
@@ -15,7 +16,9 @@ export function displayErrors(
 
   for (const error of errors) {
     if (error.errors.length == 0) {
-      console.log(chalk.green(`${error.path}  ==> OK`));
+      if (!showOnlyErrors) {
+        console.log(chalk.green(`${error.path}  ==> OK`));
+      }
       continue;
     } else {
       console.log(colorIfError(error.path));

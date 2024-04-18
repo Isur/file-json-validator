@@ -16,6 +16,7 @@ export class CliDir implements CliCommand {
     onlyWarn: false,
     onlyStructure: false,
     onlyJson: false,
+    showOnlyErrors: false,
   };
 
   private main: string;
@@ -37,6 +38,8 @@ export class CliDir implements CliCommand {
         this.flags.onlyStructure = true;
       } else if (flag === "--only-json") {
         this.flags.onlyJson = true;
+      } else if (flag === "--show-only-errors") {
+        this.flags.showOnlyErrors = true;
       } else {
         return `Unknown flag: ${flag}`;
       }
@@ -52,9 +55,9 @@ export class CliDir implements CliCommand {
       return { result: null, error: dirErrors.error };
     }
 
-    const dirErrorsNumber = dirErrors.result.filter(
-      (error) => error.errors.length > 0
-    ).length;
+    const dirErrorsNumber = dirErrors.result
+      .filter((error) => error.errors.length > 0)
+      .reduce((prev, acc) => prev + acc.errors.length, 0);
 
     return {
       result: { numberOfErrors: dirErrorsNumber, files: dirErrors.result },
@@ -101,7 +104,8 @@ export class CliDir implements CliCommand {
       displayErrors(
         dirResult.result.files,
         this.flags.onlyWarn,
-        "Directory structure:"
+        `Directory structure: (${dirResult.result.numberOfErrors} errors)`,
+        this.flags.showOnlyErrors
       );
     }
 
@@ -119,7 +123,8 @@ export class CliDir implements CliCommand {
       displayErrors(
         filesResult.result.files,
         this.flags.onlyWarn,
-        "Json content:"
+        `Json content: (${filesResult.result.numberOfErrors} errors)`,
+        this.flags.showOnlyErrors
       );
     }
 

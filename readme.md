@@ -30,11 +30,12 @@ pnpm add file-json-validator
 
 ### Flags:
 
-| Flag               | Description                                    | Command                  |
-| ------------------ | ---------------------------------------------- | ------------------------ |
-| `--only-warn`      | Do not exit with error if there are any diffs. | `compare`, `dir`, `json` |
-| `--only-structure` | Check only file structure.                     | `compare`, `dir`         |
-| `--only-json`      | Check only json structure.                     | `compare`, `dir`         |
+| Flag                 | Description                                    | Command                  |
+| -------------------- | ---------------------------------------------- | ------------------------ |
+| `--only-warn`        | Do not exit with error if there are any diffs. | `compare`, `dir`, `json` |
+| `--show-only-errors` | Show only errors.                              | `compare`, `dir`, `json` |
+| `--only-structure`   | Check only file structure.                     | `compare`, `dir`         |
+| `--only-json`        | Check only json structure.                     | `compare`, `dir`         |
 
 ## Commands description
 
@@ -69,6 +70,8 @@ Will compare the directories `ger` and `pl` and its files with the main one `en`
 If any of the directories has different files or the files has different structure, it will show the differences and will exit with an error.
 
 If you don't want it to exit with error you can use `--only-warn` flag.
+
+If you don't want to see confirmation `==> OK` and only see erros/warnings you can use `--show-only-errors` flag.
 
 If you want to check only the file structure, you can use `--only-structure` flag.
 
