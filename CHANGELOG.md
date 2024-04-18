@@ -1,5 +1,41 @@
 # file-json-validator
 
+## 1.0.0
+
+### Major Changes
+
+API:
+
+```ts import {
+  compareJsonsInDirs,
+  compareDirectoriesContent,
+  compareJsonsFiles,
+  compareJsonObjects,
+} from "file-json-validator";
+```
+
+- `compareJsonsInDirs` - compare json files in directories.
+- `compareDirectoriesContent` - check if directories has the same files.
+- `compareJsonsFiles` - compare json files.
+- `compareJsonObjects` - compare json objects.
+
+With provided typescript types.
+
+CLI:
+
+| Command       | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `fjv compare` | Compare content of directories inside selected directory. |
+| `fjv dir`     | Compare selected directories.                             |
+| `fjv json`    | Compare selected json files.                              |
+
+| Flag                 | Description                                    | Command                  |
+| -------------------- | ---------------------------------------------- | ------------------------ |
+| `--only-warn`        | Do not exit with error if there are any diffs. | `compare`, `dir`, `json` |
+| `--show-only-errors` | Show only errors.                              | `compare`, `dir`, `json` |
+| `--only-structure`   | Check only file structure.                     | `compare`, `dir`         |
+| `--only-json`        | Check only json structure.                     | `compare`, `dir`         |
+
 ## 0.3.0
 
 ### Minor Changes
