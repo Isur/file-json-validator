@@ -3,10 +3,36 @@
 This npm package is designed to simplify the comparison of directory structures and JSON files within them.
 Whether you're managing translation files with directory per language or any other scenario where maintaining consistent file structures is crucial. This tool will help you in your project.
 
+# Example use case
+
+If you have translation files in json where each language has its own directory you can use it to check if all languages has the same file structure and all keys in json files.
+
+Example:
+
+```json
+"scripts": {
+  "translations-check": "fjv compare ./public/locales en",
+  "translations-check:warn": "fjv compare ./public/locales en --only-warn",
+  "translations-check-specific": "fjv dir ./public/locales/en ./public/locales/pl"
+}
+```
+
+And run as
+
+```bash
+pnpm run translations-check
+```
+
+Can be used also in the CI - if there are any errors it will exit with error.
+
 # Features
 
-- Directory structure comparison - quickly compare if pointed directories has the same files (not looking for nested directories yet).
+- Directory structure comparison - quickly compare if pointed directories has the same files.
 - JSON file key comparison - compare JSON's to check if their structure is the same (this compares only keys, not the values!).
+
+# Demo
+
+![demo.gif](./demo.gif)
 
 # Instalation
 
@@ -41,13 +67,13 @@ pnpm add file-json-validator
 
 ### Compare
 
-Compare content of directories inside selected directory. It will check if all directories have the same json files and if the json files has the same structures. First argument is path to the directory and the second one is the main directory that others will be compared to. It does not look in nested directories yet!
+Compare content of directories inside selected directory. It will check if all directories have the same json files and if the json files has the same structures. First argument is path to the directory and the second one is the main directory that others will be compared to.
 
 If your files are structured like this:
 
 ```bash
 ./public
-└── locale
+└── locales
     ├── en
     │   ├── buttons.json
     │   └── common.json
@@ -71,7 +97,7 @@ If any of the directories has different files or the files has different structu
 
 If you don't want it to exit with error you can use `--only-warn` flag.
 
-If you don't want to see confirmation `==> OK` and only see erros/warnings you can use `--show-only-errors` flag.
+If you don't want to see confirmation `==> OK` and only see errors/warnings you can use `--show-only-errors` flag.
 
 If you want to check only the file structure, you can use `--only-structure` flag.
 
@@ -80,16 +106,14 @@ If you want to check only the json structure, you can use `--only-json` flag.
 Example output:
 
 ```bash
-Validate file structure:
-File structure: 1 error(s)
-./public/locale/pl
+Directory structure: (1 errors)
+./public/locales/pl
          -buttons.json
-./public/locale/ger  ==> OK
-Validate jsons structure:
-Json files: 3 error(s)
-./public/locale/ger/buttons.json  ==> OK
-./public/locale/pl/common.json  ==> OK
-./public/locale/ger/common.json
+./public/locales/ger  ==> OK
+Json content: (3 errors)
+./public/locales/ger/buttons.json  ==> OK
+./public/locales/pl/common.json  ==> OK
+./public/locales/ger/common.json
          -calc.minus
          -calc.equal
          +no
@@ -100,22 +124,20 @@ Json files: 3 error(s)
 If you want to compare selected directories you can use `dir` command. It will work the same as the `compare` command, but you can select directories to compare.
 
 ```bash
-fjv dir ./public/locale/en ./public/locale/ger ./public/locale/pl
+fjv dir ./public/locales/en ./public/locales/ger ./public/locales/pl
 ```
 
 Example output:
 
 ```bash
-Validate file structure:
-File structure: 1 error(s)
-./public/locale/pl
+Directory structure: (1 errors)
+./public/locales/pl
          -buttons.json
-./public/locale/ger  ==> OK
-Validate jsons structure:
-Json files: 3 error(s)
-./public/locale/ger/buttons.json  ==> OK
-./public/locale/pl/common.json  ==> OK
-./public/locale/ger/common.json
+./public/locales/ger  ==> OK
+Json content: (3 errors)
+./public/locales/ger/buttons.json  ==> OK
+./public/locales/pl/common.json  ==> OK
+./public/locales/ger/common.json
          -calc.minus
          -calc.equal
          +no
@@ -132,8 +154,7 @@ fjv json ./public/en/buttons.json ./public/ger/buttons.json ./public/pl/buttons.
 Example output:
 
 ```bash
-Validate jsons structure:
-Json files: 3 error(s)
+Json: (3 errors)
 ./public/pl/common.json  ==> OK
 ./public/ger/common.json
          -calc.minus
@@ -160,61 +181,3 @@ import {
 - `compareJsonObjects` - compare json objects.
 
 There are provided types for those functions.
-
-# Example use case
-
-If you have translation files in json where each language has its own directory you can use it to check if all languages has the same file structure and all keys in json files.
-
-Example:
-
-```json
-"scripts": {
-  "translations-check": "fjv compare ./public/locale en",
-  "translations-check:warn": "fjv compare ./public/locale en --only-warn",
-  "translations-check-specific": "fjv dir ./public/locale/en ./public/locale/pl"
-}
-```
-
-And run as
-
-```bash
-pnpm run translations-check
-```
-
-Can be used also in the CI - if there are any errors it will exit with error.
-
-# Example result
-
-For such a file structure:
-
-```
-$ tree ./public
-./public
-├── en
-│   ├── buttons.json
-│   └── common.json
-├── ger
-│   ├── buttons.json
-│   └── common.json
-└── pl
-    └── common.json
-```
-
-Output will be like this:
-
-```
-$ node dist/cli.js ./public/en ./public/pl ./public/ger
-Validate file structure:
-File structure: 1 error(s)
-./public/pl
-         -buttons.json
-./public/ger  ==> OK
-Validate jsons structure:
-Json files: 3 error(s)
-./public/ger/buttons.json  ==> OK
-./public/pl/common.json  ==> OK
-./public/ger/common.json
-         -calc.minus
-         -calc.equal
-         +no
-```
