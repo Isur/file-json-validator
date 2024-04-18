@@ -5,7 +5,7 @@ Whether you're managing translation files with directory per language or any oth
 
 # Features
 
-- Directory structure comparison - quickly compare if pointed directories has the same files.
+- Directory structure comparison - quickly compare if pointed directories has the same files (not looking for nested directories yet).
 - JSON file key comparison - compare JSON's to check if their structure is the same (this compares only keys, not the values!).
 
 # Instalation
@@ -140,19 +140,23 @@ Json files: 3 error(s)
 
 ## API
 
-There are exported function:
+There are exported functions that you can import in your project:
 
 ```ts
-export { niceDisplay, validateDirs, validateFiles };
+import {
+  compareJsonsInDirs,
+  compareDirectoriesContent,
+  compareJsonsFiles,
+  compareJsonObjects,
+} from "file-json-validator";
 ```
 
-`validateDirs` compare file structure in directory.
+- `compareJsonsInDirs` - compare json files in directories.
+- `compareDirectoriesContent` - check if directories has the same files.
+- `compareJsonsFiles` - compare json files.
+- `compareJsonObjects` - compare json objects.
 
-`validateFiles` compare file contents in directories.
-
-Both accepts two arguements - path to main directory and array of paths to other directories. Comparion will be made as main vs each one from other.
-
-Errors produced by those can be printed nicely with `niceDisplay`.
+There are provided types for those functions.
 
 # Example use case
 

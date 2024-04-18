@@ -24,6 +24,6 @@ describe("validateFiles", () => {
 
   it("Should returns errors", () => {
     const result = compareJsonsInDirs("./failed/en", ["./failed/xd"]);
-    expect(result.error).not.toBeNull();
+    expect(result.error!.details).not.toBeNull();
   });
 });
