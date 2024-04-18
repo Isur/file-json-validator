@@ -5,7 +5,7 @@ Whether you're managing translation files with directory per language or any oth
 
 # Features
 
-- Directory structure comparison - quickly compare if pointed directories has the same files.
+- Directory structure comparison - quickly compare if pointed directories has the same files (not looking for nested directories yet).
 - JSON file key comparison - compare JSON's to check if their structure is the same (this compares only keys, not the values!).
 
 # Instalation
@@ -13,41 +13,150 @@ Whether you're managing translation files with directory per language or any oth
 To install simply use your package manager to install `file-json-validator`.
 
 ```bash
-pnpm add file-json validator
+pnpm add file-json-validator
 ```
 
 # Usage
 
-## Script
+## CLI
 
-There is bin file `fjv` that can be used:
+### Commands
 
-`fjv ./public/en ./public/pl ./public/ger`
+| Command       | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `fjv compare` | Compare content of directories inside selected directory. |
+| `fjv dir`     | Compare selected directories.                             |
+| `fjv json`    | Compare selected json files.                              |
 
-If there are any diffs found app will exit with an error.
+### Flags:
+
+| Flag               | Description                                    | Command                  |
+| ------------------ | ---------------------------------------------- | ------------------------ |
+| `--only-warn`      | Do not exit with error if there are any diffs. | `compare`, `dir`, `json` |
+| `--only-structure` | Check only file structure.                     | `compare`, `dir`         |
+| `--only-json`      | Check only json structure.                     | `compare`, `dir`         |
+
+## Commands description
+
+### Compare
+
+Compare content of directories inside selected directory. It will check if all directories have the same json files and if the json files has the same structures. First argument is path to the directory and the second one is the main directory that others will be compared to. It does not look in nested directories yet!
+
+If your files are structured like this:
+
+```bash
+./public
+└── locale
+    ├── en
+    │   ├── buttons.json
+    │   └── common.json
+    ├── ger
+    │   ├── buttons.json
+    │   └── common.json
+    └── pl
+        └── common.json
+
+```
+
+Then using this:
+
+```bash
+fjv compare ./public/locales en
+```
+
+Will compare the directories `ger` and `pl` and its files with the main one `en`.
+
+If any of the directories has different files or the files has different structure, it will show the differences and will exit with an error.
+
 If you don't want it to exit with error you can use `--only-warn` flag.
 
-First argument for app will use direcotry as main and compare others to it.
+If you want to check only the file structure, you can use `--only-structure` flag.
 
-Diffs shown with "+" sign means that this file/key not exists in main dir/file.
+If you want to check only the json structure, you can use `--only-json` flag.
 
-Diffs shown with "-" sign means that this file/key exists in main dir/file but not in that we compare.
+Example output:
+
+```bash
+Validate file structure:
+File structure: 1 error(s)
+./public/locale/pl
+         -buttons.json
+./public/locale/ger  ==> OK
+Validate jsons structure:
+Json files: 3 error(s)
+./public/locale/ger/buttons.json  ==> OK
+./public/locale/pl/common.json  ==> OK
+./public/locale/ger/common.json
+         -calc.minus
+         -calc.equal
+         +no
+```
+
+### Dir
+
+If you want to compare selected directories you can use `dir` command. It will work the same as the `compare` command, but you can select directories to compare.
+
+```bash
+fjv dir ./public/locale/en ./public/locale/ger ./public/locale/pl
+```
+
+Example output:
+
+```bash
+Validate file structure:
+File structure: 1 error(s)
+./public/locale/pl
+         -buttons.json
+./public/locale/ger  ==> OK
+Validate jsons structure:
+Json files: 3 error(s)
+./public/locale/ger/buttons.json  ==> OK
+./public/locale/pl/common.json  ==> OK
+./public/locale/ger/common.json
+         -calc.minus
+         -calc.equal
+         +no
+```
+
+### Json
+
+If you want to compare selected json files you can use `json` command. It will work the same as the `compare` command, but you can select json files to compare.
+
+```bash
+fjv json ./public/en/buttons.json ./public/ger/buttons.json ./public/pl/buttons.json
+```
+
+Example output:
+
+```bash
+Validate jsons structure:
+Json files: 3 error(s)
+./public/pl/common.json  ==> OK
+./public/ger/common.json
+         -calc.minus
+         -calc.equal
+         +no
+```
 
 ## API
 
-There are exported function:
+There are exported functions that you can import in your project:
 
 ```ts
-export { niceDisplay, validateDirs, validateFiles };
+import {
+  compareJsonsInDirs,
+  compareDirectoriesContent,
+  compareJsonsFiles,
+  compareJsonObjects,
+} from "file-json-validator";
 ```
 
-`validateDirs` compare file structure in directory.
+- `compareJsonsInDirs` - compare json files in directories.
+- `compareDirectoriesContent` - check if directories has the same files.
+- `compareJsonsFiles` - compare json files.
+- `compareJsonObjects` - compare json objects.
 
-`validateFiles` compare file contents in directories.
-
-Both accepts two arguements - path to main directory and array of paths to other directories. Comparion will be made as main vs each one from other.
-
-Errors produced by those can be printed nicely with `niceDisplay`.
+There are provided types for those functions.
 
 # Example use case
 
@@ -57,8 +166,9 @@ Example:
 
 ```json
 "scripts": {
-  "translations-check": "fjv ./public/en ./public/ger ./public/pl ./public/fr",
-  "translations-check:warn": "fjv ./public/en ./public/ger ./public/pl ./public/fr --only-warn"
+  "translations-check": "fjv compare ./public/locale en",
+  "translations-check:warn": "fjv compare ./public/locale en --only-warn",
+  "translations-check-specific": "fjv dir ./public/locale/en ./public/locale/pl"
 }
 ```
 

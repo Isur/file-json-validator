@@ -1,0 +1,9 @@
+{
+  "name": "Name",
+  "calc": {
+    "add": "Add",
+    "minus": "Minus",
+    "equal": "Equal"
+  },
+  "test": "Test"
+}
