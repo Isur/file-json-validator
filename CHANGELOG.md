@@ -4,39 +4,61 @@
 
 ### Minor Changes
 
-- Now CLI has few commands.
+#### Breaking changes
 
-  | Command       | Description                                               |
-  | ------------- | --------------------------------------------------------- |
-  | `fjv compare` | Compare content of directories inside selected directory. |
-  | `fjv dir`     | Compare selected directories.                             |
-  | `fjv json`    | Compare selected json files.                              |
+Now instead of
 
-  Each commands has flags:
+```bash
+fjv ./public/locale/en ./public/locale/pl ./public/locale/ger
+```
 
-  | Flag               | Description                                    | Command                  |
-  | ------------------ | ---------------------------------------------- | ------------------------ |
-  | `--only-warn`      | Do not exit with error if there are any diffs. | `compare`, `dir`, `json` |
-  | `--only-structure` | Check only file structure.                     | `compare`, `dir`         |
-  | `--only-json`      | Check only json structure.                     | `compare`, `dir`         |
+you should use
 
-  There are exported functions that you can import in your project:
+```bash
+fjv dir ./public/locale/en ./public/locale/pl ./public/locale/ger
+```
 
-  ```ts
-  import {
-    compareJsonsInDirs,
-    compareDirectoriesContent,
-    compareJsonsFiles,
-    compareJsonObjects,
-  } from "file-json-validator";
-  ```
+or
 
-  - `compareJsonsInDirs` - compare json files in directories.
-  - `compareDirectoriesContent` - check if directories has the same files.
-  - `compareJsonsFiles` - compare json files.
-  - `compareJsonObjects` - compare json objects.
+```bash
+fjv compare ./public/locale en
+```
 
-  There are provided types for those functions.
+#### CLI Commands
+
+| Command       | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `fjv compare` | Compare content of directories inside selected directory. |
+| `fjv dir`     | Compare selected directories.                             |
+| `fjv json`    | Compare selected json files.                              |
+
+Each commands has flags:
+
+| Flag               | Description                                    | Command                  |
+| ------------------ | ---------------------------------------------- | ------------------------ |
+| `--only-warn`      | Do not exit with error if there are any diffs. | `compare`, `dir`, `json` |
+| `--only-structure` | Check only file structure.                     | `compare`, `dir`         |
+| `--only-json`      | Check only json structure.                     | `compare`, `dir`         |
+
+#### API
+
+There are exported functions that you can import in your project:
+
+```ts
+import {
+  compareJsonsInDirs,
+  compareDirectoriesContent,
+  compareJsonsFiles,
+  compareJsonObjects,
+} from "file-json-validator";
+```
+
+- `compareJsonsInDirs` - compare json files in directories.
+- `compareDirectoriesContent` - check if directories has the same files.
+- `compareJsonsFiles` - compare json files.
+- `compareJsonObjects` - compare json objects.
+
+There are provided types for those functions.
 
 ## 0.2.4
 
