@@ -38,12 +38,13 @@ describe("cli compare", () => {
       const compare = new CliCompare();
       compare.parseInput(
         ["path", "main"],
-        ["--only-warn", "--only-structure", "--only-json"]
+        ["--only-warn", "--only-structure", "--only-json", "--show-only-errors"]
       );
       expect(compare["flags"]).toEqual({
         onlyWarn: true,
         onlyStructure: true,
         onlyJson: true,
+        showOnlyErrors: true,
       });
     });
 
@@ -58,6 +59,15 @@ describe("cli compare", () => {
     it("Should work fine for correct input", () => {
       const compare = new CliCompare();
       const parseResult = compare.parseInput(["./public/locale", "en"], []);
+      expect(parseResult).toBeNull();
+      const result = compare.execute();
+      expect(result.error).toBeNull();
+      expect(result.result).toBe(1);
+    });
+
+    it("Should work fine for correct input - nested", () => {
+      const compare = new CliCompare();
+      const parseResult = compare.parseInput(["./nested", "en"], []);
       expect(parseResult).toBeNull();
       const result = compare.execute();
       expect(result.error).toBeNull();

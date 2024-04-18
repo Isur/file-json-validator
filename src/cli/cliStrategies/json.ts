@@ -8,6 +8,7 @@ export class CliJson implements CliCommand {
 
   private flags = {
     onlyWarn: false,
+    showOnlyErrors: false,
   };
 
   private main: string;
@@ -25,6 +26,8 @@ export class CliJson implements CliCommand {
     for (const flag of flags) {
       if (flag === "--only-warn") {
         this.flags.onlyWarn = true;
+      } else if (flag === "--show-only-errors") {
+        this.flags.showOnlyErrors = true;
       } else {
         return `Unknown flag: ${flag}`;
       }
@@ -38,7 +41,12 @@ export class CliJson implements CliCommand {
 
     if (results.error) return { error: results.error, result: null };
 
-    displayErrors(results.result, this.flags.onlyWarn);
+    displayErrors(
+      results.result,
+      this.flags.onlyWarn,
+      `Json: (${results.result.reduce((prev, acc) => acc.errors.length + prev, 0)} errors)`,
+      this.flags.showOnlyErrors
+    );
 
     const errorSum = results.result.reduce(
       (acc, curr) => acc + curr.errors.length,

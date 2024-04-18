@@ -38,6 +38,18 @@ describe("cli json", () => {
       expect(result).toBe("Unknown flag: --only-war");
     });
 
+    it("Should set flags", () => {
+      const compare = new CliJson();
+      compare.parseInput(
+        ["path", "main"],
+        ["--only-warn", "--show-only-errors"]
+      );
+      expect(compare["flags"]).toEqual({
+        onlyWarn: true,
+        showOnlyErrors: true,
+      });
+    });
+
     it("Should failed if not enough arguments", () => {
       const json = new CliJson();
       const args = ["main"];

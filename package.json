@@ -1,6 +1,6 @@
 {
   "name": "file-json-validator",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Check if files in selected directories has the same structure.",
   "main": "dist/index.js",
   "export": "dist/index.js",
@@ -14,11 +14,7 @@
     "dev": "pnpm run build && concurrently \"tsc -w\" \"tsc-alias -w\" \"nodemon ./dist/index.js\"",
     "dev:cli": "pnpm run build && concurrently \"tsc -w\" \"tsc-alias -w\" \"nodemon ./dist/cli/cli.js compare ./public/locale en\"",
     "build": "rimraf dist && tsc && tsc-alias",
-    "cli:dir-ok": "node ./dist/cli/cli.js dir ./correct/en ./correct/pl ./correct/ger",
-    "cli:dir-err": "node ./dist/cli/cli.js dir ./failed/en ./failed/pl ./failed/ger",
-    "cli:compare": "node ./dist/cli/cli.js compare ./public/locale en",
-    "cli:jsons": "node ./dist/cli/cli.js json ./correct/en/common.json ./correct/pl/common.json ./correct/ger/common.json",
-    "cli:jsons-failed": "node ./dist/cli/cli.js json ./failed/en/common.json ./failed/pl/common.json ./failed/ger/common.json",
+    "cli": "node ./dist/cli/cli.js",
     "typecheck": "tsc --noEmit",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
@@ -29,12 +25,10 @@
   },
   "keywords": [
     "typescript",
-    "jest",
-    "eslint",
-    "prettier",
     "translations",
     "json",
-    "validator"
+    "validator",
+    "ci"
   ],
   "author": "Isur <bednarczykartur96@gmail.com>",
   "license": "MIT",

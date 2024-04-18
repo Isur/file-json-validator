@@ -1,0 +1,10 @@
+{
+  "someGroup": {
+    "btn": "test",
+    "btn2": "test",
+    "btnGroup": {
+      "btnGr1": "test",
+      "btnGr2": "test"
+    }
+  }
+}

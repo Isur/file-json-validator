@@ -34,12 +34,13 @@ describe("cli dir", () => {
       const dir = new CliDir();
       dir.parseInput(
         ["main", "rest"],
-        ["--only-warn", "--only-structure", "--only-json"]
+        ["--only-warn", "--only-structure", "--only-json", "--show-only-errors"]
       );
       expect(dir["flags"]).toEqual({
         onlyWarn: true,
         onlyStructure: true,
         onlyJson: true,
+        showOnlyErrors: true,
       });
     });
 

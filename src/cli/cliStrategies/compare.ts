@@ -12,6 +12,7 @@ export class CliCompare implements CliCommand {
     onlyWarn: false,
     onlyStructure: false,
     onlyJson: false,
+    showOnlyErrors: false,
   };
 
   private path: string;
@@ -32,6 +33,8 @@ export class CliCompare implements CliCommand {
         this.flags.onlyStructure = true;
       } else if (flag === "--only-json") {
         this.flags.onlyJson = true;
+      } else if (flag === "--show-only-errors") {
+        this.flags.showOnlyErrors = true;
       } else {
         return `Unknown flag: ${flag}`;
       }
@@ -47,9 +50,9 @@ export class CliCompare implements CliCommand {
       return { result: null, error: dirErrors.error };
     }
 
-    const dirErrorsNumber = dirErrors.result.filter(
-      (error) => error.errors.length > 0
-    ).length;
+    const dirErrorsNumber = dirErrors.result
+      .filter((error) => error.errors.length > 0)
+      .reduce((prev, acc) => prev + acc.errors.length, 0);
 
     return {
       result: { numberOfErrors: dirErrorsNumber, files: dirErrors.result },
@@ -81,7 +84,7 @@ export class CliCompare implements CliCommand {
   }
 
   public execute() {
-    const dirs = listFilesInDir(this.path);
+    const dirs = listFilesInDir(this.path, false);
 
     if (dirs.error) {
       return { error: dirs.error, result: null };
@@ -113,7 +116,12 @@ export class CliCompare implements CliCommand {
         };
       }
       errorSum += dirResult.result.numberOfErrors;
-      displayErrors(dirResult.result.files, this.flags.onlyWarn);
+      displayErrors(
+        dirResult.result.files,
+        this.flags.onlyWarn,
+        `Directory structure: (${dirResult.result.numberOfErrors} errors)`,
+        this.flags.showOnlyErrors
+      );
     }
 
     if (!this.flags.onlyStructure) {
@@ -127,7 +135,12 @@ export class CliCompare implements CliCommand {
       }
 
       errorSum += filesResult.result.numberOfErrors;
-      displayErrors(filesResult.result.files, this.flags.onlyWarn);
+      displayErrors(
+        filesResult.result.files,
+        this.flags.onlyWarn,
+        `Json content: (${filesResult.result.numberOfErrors} errors)`,
+        this.flags.showOnlyErrors
+      );
     }
 
     const exitCode = errorSum > 0 ? 1 : 0;
