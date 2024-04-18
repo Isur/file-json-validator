@@ -64,6 +64,15 @@ describe("cli compare", () => {
       expect(result.result).toBe(1);
     });
 
+    it("Should work fine for correct input - nested", () => {
+      const compare = new CliCompare();
+      const parseResult = compare.parseInput(["./nested", "en"], []);
+      expect(parseResult).toBeNull();
+      const result = compare.execute();
+      expect(result.error).toBeNull();
+      expect(result.result).toBe(1);
+    });
+
     it("Should work fine for correct input -- only-warn", () => {
       const compare = new CliCompare();
       const parseResult = compare.parseInput(

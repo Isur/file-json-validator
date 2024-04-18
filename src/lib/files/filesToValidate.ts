@@ -19,7 +19,7 @@ export function filesToValidate(
 
   for (const file of mainList.result) {
     for (const dir of restDirs) {
-      if (restLists[dir].includes(file)) {
+      if (restLists[dir].includes(file) && file.endsWith(".json")) {
         result.push({
           main: `${mainDir}/${file}`,
           toCompare: `${dir}/${file}`,

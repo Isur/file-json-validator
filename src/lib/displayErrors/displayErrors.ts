@@ -2,8 +2,16 @@
 import chalk from "chalk";
 import { FileError } from "@/lib/types/fileError";
 
-export function displayErrors(errors: Array<FileError>, onlyWarn: boolean) {
+export function displayErrors(
+  errors: Array<FileError>,
+  onlyWarn: boolean,
+  title?: string
+) {
   const colorIfError = onlyWarn ? chalk.yellow : chalk.red;
+
+  if (title) {
+    console.log(title);
+  }
 
   for (const error of errors) {
     if (error.errors.length == 0) {

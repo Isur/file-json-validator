@@ -81,7 +81,7 @@ export class CliCompare implements CliCommand {
   }
 
   public execute() {
-    const dirs = listFilesInDir(this.path);
+    const dirs = listFilesInDir(this.path, false);
 
     if (dirs.error) {
       return { error: dirs.error, result: null };
@@ -113,7 +113,11 @@ export class CliCompare implements CliCommand {
         };
       }
       errorSum += dirResult.result.numberOfErrors;
-      displayErrors(dirResult.result.files, this.flags.onlyWarn);
+      displayErrors(
+        dirResult.result.files,
+        this.flags.onlyWarn,
+        "Directory structure:"
+      );
     }
 
     if (!this.flags.onlyStructure) {
@@ -127,7 +131,11 @@ export class CliCompare implements CliCommand {
       }
 
       errorSum += filesResult.result.numberOfErrors;
-      displayErrors(filesResult.result.files, this.flags.onlyWarn);
+      displayErrors(
+        filesResult.result.files,
+        this.flags.onlyWarn,
+        "Json content:"
+      );
     }
 
     const exitCode = errorSum > 0 ? 1 : 0;
